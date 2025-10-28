@@ -35,7 +35,6 @@ public class Product extends AggregateRoot<ProductId> {
     this.stockQuantity -= quantity;
   }
 
-  // Getters
   public String getName() {
     return name;
   }

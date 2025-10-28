@@ -28,7 +28,7 @@ public class Order extends AggregateRoot<OrderId> {
         return order;
     }
 
-    public static Order restore(OrderId id, CustomerId customerId, List<OrderItem> items, 
+    public static Order restore(OrderId id, CustomerId customerId, List<OrderItem> items,
                                OrderStatus status, LocalDateTime orderDate) {
         Order order = new Order(id, customerId);
         order.items = new ArrayList<>(items);
@@ -57,7 +57,6 @@ public class Order extends AggregateRoot<OrderId> {
                    .reduce(Money.usd(BigDecimal.ZERO), Money::add);
     }
 
-    // Getters
     public CustomerId getCustomerId() { return customerId; }
     public List<OrderItem> getItems() { return new ArrayList<>(items); }
     public OrderStatus getStatus() { return status; }

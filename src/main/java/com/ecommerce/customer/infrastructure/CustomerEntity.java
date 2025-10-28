@@ -1,4 +1,3 @@
-// customer/infrastructure/CustomerEntity.java
 package com.ecommerce.customer.infrastructure;
 
 import jakarta.persistence.Column;
@@ -18,7 +17,6 @@ public class CustomerEntity {
   @Column(nullable = false, unique = true)
   private String email;
 
-  // Constructors
   public CustomerEntity() {
   }
 
@@ -28,7 +26,6 @@ public class CustomerEntity {
     this.email = email;
   }
 
-  // Getters and setters
   public String getId() {
     return id;
   }

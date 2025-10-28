@@ -1,12 +1,17 @@
-// test/java/com/ecommerce/order/domain/OrderTest.java
 package com.ecommerce.order.domain;
 
-import com.ecommerce.customer.domain.CustomerId;
-import com.ecommerce.product.domain.ProductId;
-import com.ecommerce.product.domain.Money;
-import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import com.ecommerce.customer.domain.CustomerId;
+import com.ecommerce.product.domain.Money;
+import com.ecommerce.product.domain.ProductId;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OrderTest {
 

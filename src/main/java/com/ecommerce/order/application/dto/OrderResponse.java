@@ -32,7 +32,6 @@ public class OrderResponse {
             return response;
         }
 
-        // Getters
         public String getProductId() { return productId; }
         public String getProductName() { return productName; }
         public BigDecimal getUnitPrice() { return unitPrice; }
@@ -53,7 +52,6 @@ public class OrderResponse {
         return response;
     }
 
-    // Getters
     public String getId() { return id; }
     public String getCustomerId() { return customerId; }
     public String getStatus() { return status; }

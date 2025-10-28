@@ -28,7 +28,6 @@ public class ProductEntity {
   @Column(name = "stock_quantity", nullable = false)
   private int stockQuantity;
 
-  // Constructors
   public ProductEntity() {
   }
 
@@ -42,7 +41,6 @@ public class ProductEntity {
     this.stockQuantity = stockQuantity;
   }
 
-  // Getters and setters
   public String getId() {
     return id;
   }
