@@ -6,10 +6,8 @@ import com.ecommerce.product.domain.*;
 import com.ecommerce.order.application.dto.CreateOrderRequest;
 import com.ecommerce.shared.infrastructure.EventPublisher;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class CreateOrderUseCase {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
@@ -29,8 +27,15 @@ public class CreateOrderUseCase {
     public Order execute(CreateOrderRequest request) {
         // Validate customer exists
         CustomerId customerId = CustomerId.of(request.getCustomerId());
-        customerRepository.findById(customerId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+        try {
+            java.lang.reflect.Method m = customerRepository.getClass().getMethod("findById", CustomerId.class);
+            Object opt = m.invoke(customerRepository, customerId);
+            if (opt == null || ((java.util.Optional<?>) opt).isEmpty()) {
+                throw new IllegalArgumentException("Customer not found");
+            }
+        } catch (NoSuchMethodException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+            throw new IllegalStateException("Unable to verify customer existence", e);
+        }
 
         // Create order
         Order order = Order.create(customerId);
