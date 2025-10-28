@@ -1,12 +1,14 @@
 package com.ecommerce.product.domain;
 
+import com.ecommerce.shared.domain.AggregateRoot;
+
 public class Product extends AggregateRoot<ProductId> {
   private String name;
   private String description;
   private Money price;
   private int stockQuantity;
 
-  public Product(ProductId id, String name, String description, Money price, int stockQuantity) {
+  private Product(ProductId id, String name, String description, Money price, int stockQuantity) {
     super(id);
     this.name = name;
     this.description = description;
@@ -18,7 +20,7 @@ public class Product extends AggregateRoot<ProductId> {
     return new Product(ProductId.generate(), name, description, price, stockQuantity);
   }
 
-  public static restore(ProductId id, String name, String description, Money price, int stockQuantity) {
+  public static Product restore(ProductId id, String name, String description, Money price, int stockQuantity) {
     return new Product(id, name, description, price, stockQuantity);
   }
 
@@ -27,8 +29,8 @@ public class Product extends AggregateRoot<ProductId> {
   }
 
   public void reduceStock(int quantity) {
-    if (quantity > stockQuantity) {
-      throw new IllegalArgumentException("Insufficient stock");
+    if (!isAvailable(quantity)) {
+      throw new IllegalStateException("Insufficient stock");
     }
     this.stockQuantity -= quantity;
   }
@@ -49,5 +51,4 @@ public class Product extends AggregateRoot<ProductId> {
   public int getStockQuantity() {
     return stockQuantity;
   }
-  
 }

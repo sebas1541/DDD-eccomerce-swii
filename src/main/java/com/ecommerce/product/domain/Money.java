@@ -1,12 +1,15 @@
 package com.ecommerce.product.domain;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
+import com.ecommerce.shared.domain.ValueObject;
 
 public class Money extends ValueObject {
   private final BigDecimal amount;
   private final String currency;
 
-  public Money(BigDecimal amount, String currency) {
+  private Money(BigDecimal amount, String currency) {
     if (amount.compareTo(BigDecimal.ZERO) < 0) {
       throw new IllegalArgumentException("Amount cannot be negative");
     }
@@ -31,14 +34,14 @@ public class Money extends ValueObject {
   }
 
   public Money multiply(int quantity) {
-    return new Money(this.amount.multiply(BigDecimal.valueOf(quantity)), this.currency);
+    return new Money(amount.multiply(BigDecimal.valueOf(quantity)), currency);
   }
 
   public Money add(Money other) {
-    if (!this.currency.equals(other.currency)) {
-      throw new IllegalArgumentException("Cannot add money with different currencies");
+    if (!currency.equals(other.currency)) {
+      throw new IllegalArgumentException("Cannot add different currencies");
     }
-    return new Money(this.amount.add(other.amount), this.currency);
+    return new Money(amount.add(other.amount), currency);
   }
 
   @Override
@@ -48,12 +51,12 @@ public class Money extends ValueObject {
     if (o == null || getClass() != o.getClass())
       return false;
     Money money = (Money) o;
-    return amount.equals(money.amount) && currency.equals(money.currency);
+    return Objects.equals(amount, money.amount) &&
+        Objects.equals(currency, money.currency);
   }
 
   @Override
   public int hashCode() {
-    return Object.hashCode(amount, currency);
+    return Objects.hash(amount, currency);
   }
-
 }
